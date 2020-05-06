@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chawakorn Neng</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css" >
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css" >
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 0 2rem;
+            grid-gap: .5rem;
+            margin-bottom: 2rem;
+        }
+        .box {
+            text-align: center;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;            
+            padding: 4rem;
+            transition: .5s;
+            cursor: pointer;
+        }
+        .box:hover {
+            transform: scale(1.05);
+        }
+        .box:nth-child(1) {
+            background-color: #E67E22;
+        }
+        .box:nth-child(2) {
+            background-color: #2ECC71;
+        }
+        .box:nth-child(3) {
+            background-color: #F1C40F;
+        }
+        .box:nth-child(4) {
+            background-color: #C0392B;
+        }
+        .box:nth-child(5) {
+            background-color: #9B59B6;
+        }
+        .box:nth-child(6) {
+            background-color: #3498DB;
+        }
+        .box:nth-child(7) {
+            background-color: #F5B041 ;
+        }
+        .box:nth-child(8) {
+            background-color: #CD6155;
+        }
+        .box:nth-child(9) {
+            grid-column: 1 / 3;
+            background-color: #2E4053;
+            color: #fff;
+        }
+        .box:nth-child(10) {
+            grid-column: 3 / 5;
+            background-color: #2E4053;
+            color: #fff;
+        }
+        footer {
+            grid-column: 1 / 5;
+            background-color: #483D8B;
+            color: #fff;
+        }
+        footer a {
+            color: #F1C40F;
+            text-decoration: none;
+        }
+
+
+        p {
+            font-size: 2rem;
+        }
+
+        footer {
+            margin-top: 1rem;
+            text-align: center;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;            
+            padding: 2rem;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    </br>
+    <div><h1>Covid Report</h1></div>
+  
+    <div class="container">
+
+        <div class="box" id="Confirmed"><b>ติดเชื้อสะสม</b></br><span id="Confirmed_value"></span></div>
+        <div class="box" id="Recovered"><b>รักษาหาย</b></br><span id="Recovered_value"></span></div>
+        <div class="box" id="Hospitalized"><b>กำลังรักษาอยู่ในโรงพยาบาล</b></br><span id="Hospitalized_value"></span></div>
+        <div class="box" id="Deaths"><b>เสียชีวิต</b></br><span id="Deaths_value"></span></div>
+        <div class="box" id="NewConfirmed"><b>ผู้ติดเชื้อใหม่</b></br><span id="NewConfirmed_value"></span></div>
+        <div class="box" id="NewRecovered"><b>ผู้ที่รักษาหายล่าสุด</b></br><span id="NewRecovered_value"></span></div>
+        <div class="box" id="NewHospitalized"><b>รักษาอยู่ในโรงพยาบาลใหม่ล่าสุด</b></br><span id="NewHospitalized_value"></span></div>
+        <div class="box" id="NewDeaths"><b>เสียชีวิตล่าสุด</b></br><span id="NewDeaths_value"></span></div>
+        <div class="box" id="UpdateDate"><b>อัพเดตข้อมูลวันที่</b><span id="UpdateDate_value"></span></div>
+        <div class="box" id="Source"><b>ที่มา</b><span id="Source_value"></span></div>
+        
+        <footer>
+            <div> <b>Made By</b> <a href="https://www.youtube.com/channel/UCPWJR3VvJWUzcHR_LzoDv8A" target="_blank">Chawakorn Neng</a> </div>
+        </footer>
+
+    </div>
+    <div id="result1" hidden></div>
+    <script>
+        $(document).ready(function(){
+           //อ้างอิงคู่มือ ตามลิงค์นี้ https://iapi.bot.or.th/Developer?lang=th 
+           $("Result").ready(function(){
+           $.ajax({ 
+           type : "GET", 
+           url : "https://covid19.th-stat.com/api/open/today", 
+           success : function(result) { 
+               $("#result1").html(JSON.stringify(result));
+               console.log(JSON.stringify(result));
+
+               $("#Confirmed_value").html(result.Confirmed);
+               $("#Recovered_value").html(result.Recovered);
+               $("#Hospitalized_value").html(result.Hospitalized);
+               $("#Deaths_value").html(result.Deaths);
+               $("#NewConfirmed_value").html(result.NewConfirmed);
+               $("#NewRecovered_value").html(result.NewRecovered);
+               $("#NewHospitalized_value").html(result.NewHospitalized);               
+               $("#NewDeaths_value").html(result.NewDeaths);
+               $("#UpdateDate_value").html(result.UpdateDate);
+               $("#Source_value").html(result.Source);
+           }, 
+           
+           error : function(result) { 
+             //handle the error 
+           } 
+
+                });  
+                            });
+                    });
+
+    </script>
+</body>
+</html>
